@@ -182,5 +182,5 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "AudioFadeEffect": "Audio Fade In/Out",
+    "AudioFadeEffect": "SlopAudio Fade",
 }
