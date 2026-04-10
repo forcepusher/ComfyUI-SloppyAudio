@@ -13,6 +13,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 # Define the paths to the module files
 audio_enhancer_path = os.path.join(current_dir, "audio_enhancer.py")
 audio_effects_path = os.path.join(current_dir, "audio_effects.py")
+audio_fade_path = os.path.join(current_dir, "audio_fade.py")
 
 # Import the modules using importlib
 try:
@@ -26,19 +27,27 @@ try:
     audio_effects = importlib.util.module_from_spec(spec_effects)
     spec_effects.loader.exec_module(audio_effects)
     
+    # Import audio_fade.py
+    spec_fade = importlib.util.spec_from_file_location("audio_fade", audio_fade_path)
+    audio_fade = importlib.util.module_from_spec(spec_fade)
+    spec_fade.loader.exec_module(audio_fade)
+    
     # Get the classes
     AudioQualityEnhancer = audio_enhancer.AudioQualityEnhancer
     AudioQualityEffects = audio_effects.AudioQualityEffects
+    AudioFadeEffect = audio_fade.AudioFadeEffect
     
     # Get the mappings
     enhancer_mappings = audio_enhancer.NODE_CLASS_MAPPINGS
     enhancer_display_mappings = audio_enhancer.NODE_DISPLAY_NAME_MAPPINGS
     effects_mappings = audio_effects.NODE_CLASS_MAPPINGS
     effects_display_mappings = audio_effects.NODE_DISPLAY_NAME_MAPPINGS
+    fade_mappings = audio_fade.NODE_CLASS_MAPPINGS
+    fade_display_mappings = audio_fade.NODE_DISPLAY_NAME_MAPPINGS
     
     # Merge the dictionaries
-    NODE_CLASS_MAPPINGS = {**enhancer_mappings, **effects_mappings}
-    NODE_DISPLAY_NAME_MAPPINGS = {**enhancer_display_mappings, **effects_display_mappings}
+    NODE_CLASS_MAPPINGS = {**enhancer_mappings, **effects_mappings, **fade_mappings}
+    NODE_DISPLAY_NAME_MAPPINGS = {**enhancer_display_mappings, **effects_display_mappings, **fade_display_mappings}
     
     print("ComfyUI Audio Quality Enhancer: Successfully loaded nodes")
     print(f"Available nodes: {list(NODE_CLASS_MAPPINGS.keys())}")
