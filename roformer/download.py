@@ -11,8 +11,7 @@ SAFETENSORS_URL = f"{_HF_BASE}/resolve/main/model.safetensors"
 CONFIG_URL = f"{_HF_BASE}/raw/main/config.json"
 SAFETENSORS_FILE = "model.safetensors"
 CONFIG_FILE = "config.json"
-
-_CACHE_DIR = os.path.join(os.path.expanduser("~"), ".cache", "sloppyaudio", "bs-roformer-v2-46.8m")
+_MODEL_SUBDIR = os.path.join("sloppyaudio", "bs-roformer-v2-46.8m")
 
 
 def _progress_hook(block_num, block_size, total_size):
@@ -37,13 +36,22 @@ def _download(url: str, dest: str) -> None:
         raise
 
 
-def get_cache_dir() -> str:
-    os.makedirs(_CACHE_DIR, exist_ok=True)
-    return _CACHE_DIR
+def _get_models_dir() -> str:
+    try:
+        import folder_paths
+        return os.path.join(folder_paths.models_dir, _MODEL_SUBDIR)
+    except ImportError:
+        return os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "models", _MODEL_SUBDIR)
+
+
+def get_model_dir() -> str:
+    d = _get_models_dir()
+    os.makedirs(d, exist_ok=True)
+    return d
 
 
 def ensure_config() -> dict:
-    cache = get_cache_dir()
+    cache = get_model_dir()
     path = os.path.join(cache, CONFIG_FILE)
     if not os.path.isfile(path):
         print(f"[SloppyAudio] Downloading config from {CONFIG_URL}")
@@ -53,7 +61,7 @@ def ensure_config() -> dict:
 
 
 def ensure_weights() -> str:
-    cache = get_cache_dir()
+    cache = get_model_dir()
     path = os.path.join(cache, SAFETENSORS_FILE)
     if os.path.isfile(path):
         return path

@@ -5,7 +5,7 @@ SoX and BS-RoFormer nodes for ComfyUI. SoX for sound editing, BS-RoFormer for au
 ## Nodes
 
 ### SloppyAudio Stem Separate
-Splits audio into **vocals**, **drums**, **bass**, and **other** stems using [Mini-BS-RoFormer-V2-46.8M](https://huggingface.co/HiDolen/Mini-BS-RoFormer-V2-46.8M). Model auto-downloads from HuggingFace on first run (~94 MB, cached in `~/.cache/sloppyaudio/`). Connect only the stem outputs you need.
+Splits audio into **vocals**, **drums**, **bass**, and **other** stems using [Mini-BS-RoFormer-V2-46.8M](https://huggingface.co/HiDolen/Mini-BS-RoFormer-V2-46.8M). Model auto-downloads from HuggingFace on first run (~94 MB, stored in `ComfyUI/models/sloppyaudio/`). Connect only the stem outputs you need.
 
 ### SloppyAudio Stem Merge
 Mix up to 4 audio inputs back together with per-input gain control (dB). Auto-normalizes to prevent clipping. Handles mono/stereo and mismatched lengths.
