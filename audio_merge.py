@@ -7,7 +7,7 @@ def _db_to_linear(db: float) -> float:
     return 10.0 ** (db / 20.0)
 
 
-class SloppyAudioMerge:
+class SloppyAudioStemMerge:
     @classmethod
     def INPUT_TYPES(cls):
         gain = lambda default=0.0: ("FLOAT", {"default": default, "min": -60.0, "max": 24.0, "step": 0.5})
@@ -85,9 +85,9 @@ class SloppyAudioMerge:
 
 
 NODE_CLASS_MAPPINGS = {
-    "SloppyAudioMerge": SloppyAudioMerge,
+    "SloppyAudioStemMerge": SloppyAudioStemMerge,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "SloppyAudioMerge": "SloppyAudio Stem Merge",
+    "SloppyAudioStemMerge": "SloppyAudio Stem Merge",
 }

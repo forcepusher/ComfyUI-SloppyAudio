@@ -28,7 +28,7 @@ def _resample(np_audio: np.ndarray, orig_sr: int, target_sr: int) -> np.ndarray:
     return np.stack(channels)
 
 
-class SloppyAudioSeparation:
+class SloppyAudioStemSeparate:
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -90,9 +90,9 @@ class SloppyAudioSeparation:
 
 
 NODE_CLASS_MAPPINGS = {
-    "SloppyAudioSeparation": SloppyAudioSeparation,
+    "SloppyAudioStemSeparate": SloppyAudioStemSeparate,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "SloppyAudioSeparation": "SloppyAudio Stem Separate",
+    "SloppyAudioStemSeparate": "SloppyAudio Stem Separate",
 }
