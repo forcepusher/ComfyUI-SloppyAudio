@@ -32,13 +32,3 @@ pip install -r requirements.txt
 ```
 
 SoX binaries are embedded in `bin/` for Windows, macOS, and Linux — no separate SoX install required.
-
-## Requirements
-
-- Python 3.10+
-- PyTorch 2.4+ (ships with ComfyUI)
-- `librosa`, `einops`, `soundfile`, `safetensors`, `numpy`
-
-## License
-
-MIT
