@@ -3,8 +3,8 @@ ComfyUI-SloppyAudio
 BS-RoFormer stem separation + SoX audio effects for ComfyUI.
 """
 
-from .audio_separation import NODE_CLASS_MAPPINGS as _sep_cls
-from .audio_separation import NODE_DISPLAY_NAME_MAPPINGS as _sep_disp
+from .audio_separate import NODE_CLASS_MAPPINGS as _sep_cls
+from .audio_separate import NODE_DISPLAY_NAME_MAPPINGS as _sep_disp
 from .audio_fade import NODE_CLASS_MAPPINGS as _fade_cls
 from .audio_fade import NODE_DISPLAY_NAME_MAPPINGS as _fade_disp
 from .audio_pitch import NODE_CLASS_MAPPINGS as _pitch_cls
