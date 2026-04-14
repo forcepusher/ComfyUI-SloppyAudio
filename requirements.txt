@@ -1,0 +1,6 @@
+torch
+numpy
+soundfile
+librosa
+einops
+transformers>=4.55.0
