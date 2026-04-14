@@ -94,5 +94,5 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "SloppyAudioSeparation": "SloppyAudio Separation",
+    "SloppyAudioSeparation": "SloppyAudio Stem Separate",
 }

@@ -89,5 +89,5 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "SloppyAudioMerge": "SloppyAudio Merge",
+    "SloppyAudioMerge": "SloppyAudio Stem Merge",
 }
