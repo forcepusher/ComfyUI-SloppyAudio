@@ -7,12 +7,10 @@ Outputs 4 stems: vocals, drums, bass, other.
 import torch
 import numpy as np
 
-MODEL_ID = "HiDolen/Mini-BS-RoFormer-V2-46.8M"
+from .roformer import load_model
+
 MODEL_SR = 44100
 STEM_ORDER = ["bass", "drums", "other", "vocals"]
-
-_model = None
-_model_device = None
 
 
 def _resolve_device(choice: str) -> str:
@@ -21,25 +19,7 @@ def _resolve_device(choice: str) -> str:
     return choice
 
 
-def _load_model(device: str):
-    global _model, _model_device
-    if _model is not None and _model_device == device:
-        return _model
-
-    from transformers import AutoModel
-
-    print(f"[SloppyAudio] Downloading / loading BS-RoFormer: {MODEL_ID}")
-    m = AutoModel.from_pretrained(MODEL_ID, trust_remote_code=True)
-    m.to(device)
-    m.eval()
-    _model = m
-    _model_device = device
-    print(f"[SloppyAudio] BS-RoFormer ready on {device}")
-    return m
-
-
 def _resample(np_audio: np.ndarray, orig_sr: int, target_sr: int) -> np.ndarray:
-    """Resample [channels, samples] numpy array."""
     import librosa
 
     channels = []
@@ -72,7 +52,7 @@ class SloppyAudioSeparation:
             return (empty, empty, empty, empty)
 
         dev = _resolve_device(device)
-        model = _load_model(dev)
+        model = load_model(dev)
 
         waveform = audio["waveform"]
         sample_rate = audio["sample_rate"]
@@ -92,10 +72,8 @@ class SloppyAudioSeparation:
         wav = wav.to(dev).float()
 
         print(f"[SloppyAudio] Separating: {wav.shape} @ {MODEL_SR}Hz on {dev}")
-        with torch.no_grad():
-            stems = model.separate(wav, batch_size=batch_size, verbose=True)
+        stems = model.separate(wav, batch_size=batch_size, verbose=True)
 
-        # stems shape: [4, channels, samples] order: bass, drums, other, vocals
         results = {}
         for i, name in enumerate(STEM_ORDER):
             stem = stems[i].cpu().float()
