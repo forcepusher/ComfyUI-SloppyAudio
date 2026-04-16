@@ -69,6 +69,10 @@ class SloppyAudioStemSeparate:
             wav_np = _resample(wav.cpu().numpy(), sample_rate, MODEL_SR)
             wav = torch.tensor(wav_np, dtype=torch.float32)
 
+        was_mono = wav.size(0) == 1
+        if was_mono:
+            wav = wav.expand(2, -1).contiguous()
+
         wav = wav.to(dev).float()
 
         print(f"[SloppyAudio] Separating: {wav.shape} @ {MODEL_SR}Hz on {dev}")
@@ -77,6 +81,8 @@ class SloppyAudioStemSeparate:
         results = {}
         for i, name in enumerate(STEM_ORDER):
             stem = stems[i].cpu().float()
+            if was_mono:
+                stem = stem[:1]
             if need_resample:
                 stem_np = _resample(stem.numpy(), MODEL_SR, sample_rate)
                 stem = torch.tensor(stem_np, dtype=torch.float32)
